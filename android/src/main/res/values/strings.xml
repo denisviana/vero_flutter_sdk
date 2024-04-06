@@ -4,4 +4,6 @@
     <string name="transaction_rejected">Transação rejeitada</string>
     <string name="transaction_canceled">Transação cancelada!</string>
     <string name="no_transaciton_to_refund">Nenhuma transação a ser estornada</string>
+    <string name="no_transaction_found">Nenhuma transação encontrada</string>
+    <string name="modelo_n_o_suporta_impress_o_de_comprovantes">Modelo não suporta impressão de comprovantes.</string>
 </resources>

@@ -3,6 +3,7 @@ package vero.flutter.com.vero_flutter
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
+import android.view.View
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -37,6 +38,8 @@ class VeroFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, Activi
         private const val TRANSACTION = "TRANSACAO"
         private const val ERROR = "ERRO"
         private const val NSU = "NSU"
+
+        const val NSU_LIST = "LIST_NSU"
 
         private const val DEBIT_TRANSACTION = "DEBITO"
         private const val PIX_TRANSACTION = "PIX"
@@ -84,6 +87,11 @@ class VeroFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, Activi
                 refund(nsu)
             }
 
+            "reprint" -> {
+                val nsu = call.argument<String>("nsu") ?: ""
+                reprint(nsu)
+            }
+
             else -> {
                 this.result?.notImplemented()
             }
@@ -112,6 +120,24 @@ class VeroFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, Activi
         intent.putExtra(TRANSACTION_AMOUNT, amount)
         intent.putExtra(TRANSACTION, PIX_TRANSACTION)
         callApi(intent)
+    }
+
+    private fun reprint(nsu: String) {
+        if (allowPrinting()) {
+            if (nsu == "") {
+                result?.error(activity?.getString(R.string.no_transaction_found) ?: "", null, null)
+            } else {
+                val intent = Intent(PAYMENT_INTENT)
+                val listNsu = ArrayList<String?>()
+                listNsu.add(nsu)
+                intent.putExtra(NSU_LIST, listNsu)
+                callApi(intent)
+            }
+        } else result?.error(
+            activity?.getString(R.string.modelo_n_o_suporta_impress_o_de_comprovantes) ?: "",
+            null,
+            null
+        )
     }
 
     private fun refund(nsu: String) {

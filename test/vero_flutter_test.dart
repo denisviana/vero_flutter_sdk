@@ -24,6 +24,9 @@ class MockVeroFlutterPlatform
 
   @override
   Future<Result?> refund(String nsu) => Future.value(transactionResultMock);
+
+  @override
+  Future<Result?> reprint(String nsu) => Future.value(transactionResultMock);
 }
 
 void main() {

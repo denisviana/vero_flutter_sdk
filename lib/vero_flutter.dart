@@ -23,4 +23,8 @@ class VeroFlutter {
     return VeroFlutterPlatform.instance.refund(nsu);
   }
 
+  Future<Result?> reprint(String nsu) {
+    return VeroFlutterPlatform.instance.reprint(nsu);
+  }
+
 }

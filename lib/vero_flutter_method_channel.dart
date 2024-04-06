@@ -80,5 +80,20 @@ class MethodChannelVeroFlutter extends VeroFlutterPlatform {
     }
   }
 
+  @override
+  Future<Result?> reprint(String nsu) async {
+    try {
+      final response = await methodChannel
+          .invokeMethod<Map<dynamic, dynamic>>('reprint', {'nsu': nsu});
+      final result = response?.toResult;
+      return result;
+    } on PlatformException catch (e) {
+      return Error(
+        code: e.code,
+        message: e.message ?? '',
+      );
+    }
+  }
+
   int _doubleAmountToInt(double amount) => (amount * pow(10, 2)).toInt();
 }

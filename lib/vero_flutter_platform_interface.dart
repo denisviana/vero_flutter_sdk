@@ -43,4 +43,8 @@ abstract class VeroFlutterPlatform extends PlatformInterface {
   Future<Result?> refund(String nsu) {
     throw UnimplementedError('refund() has not been implemented.');
   }
+
+  Future<Result?> reprint(String nsu) {
+    throw UnimplementedError('reprint() has not been implemented.');
+  }
 }
